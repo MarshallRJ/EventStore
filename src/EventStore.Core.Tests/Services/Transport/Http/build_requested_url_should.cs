@@ -92,6 +92,17 @@ namespace EventStore.Core.Tests.Services.Transport.Http
         }
 
         [Test]
+        public void with_forward_prefix_adds_prefix_when_already_prefix()
+        {
+            string host = "www.my-host.com";
+            var headers = new NameValueCollection { { "X-Forwarded-Prefix", host } };
+            var requestedUri = 
+                HttpEntity.BuildRequestedUrl(inputUri, headers, null, 0);
+            Assert.AreEqual(new Uri("http://www.my-host.com:1234/prefix/path/?key=value#anchor"), requestedUri);
+        }
+
+
+        [Test]
         public void with_proto_forward_host_and_advertised_ip_forwarded_host_is_used()
         {
             string host = "www.my-host.com";
