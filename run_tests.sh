@@ -6,13 +6,19 @@ do
             MONOPATH=$OPTARG 
             ;;   
         x)
-            EXCLUDE="-exclude $OPTARG"
+            EXCLUDE="--where:cat!=$OPTARG"
+
+        i)
+            EXCLUDE="--where:cat==$OPTARG"
+
+        f)
+            FILTER="--where:$OPTARG"
             ;;
         p)
             RUNPROJECTIONS="TRUE"
             ;;
         ?)
-            echo "Usage: run_tests.sh [-x ExcludeCategories] [-m /path/to/mono] [-p]"
+            echo "Usage: run_tests.sh [-i IncludeCategory] [-x ExcludeCategory] [-f nUnitFilter] [-m /path/to/mono] [-p]"
             echo "Defaults:"
             echo "   Mono Path: /opt/mono"
             echo "   Exclude: None"
@@ -26,7 +32,7 @@ if [[ $MONOPATH == "" ]]; then
     MONOPATH="/opt/mono"
 fi
 
-LD_LIBRARY_PATH=bin/tests:$MONOPATH/lib/:$LD_LIBRARY_PATH mono tools/nunit-3.4.1/bin/nunit3-console.exe bin/tests/EventStore.Core.Tests.dll $EXCLUDE
+LD_LIBRARY_PATH=bin/tests:$MONOPATH/lib/:$LD_LIBRARY_PATH mono tools/nunit-3.4.1/bin/nunit3-console.exe bin/tests/EventStore.Core.Tests.dll $EXCLUDE $INCLUDE $FILTER
 rc=$?
 # xsltproc tools/nunit-3.4.1/results.xslt TestResult.xml
 # rm inter
