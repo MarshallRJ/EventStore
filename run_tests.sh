@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-while getopts "m:x:p" option
+while getopts "m:x:f:i:p" option
 do
     case $option in
         m)
@@ -7,10 +7,10 @@ do
             ;;   
         x)
             EXCLUDE="--where:cat!=$OPTARG"
-
+            ;;
         i)
-            EXCLUDE="--where:cat==$OPTARG"
-
+            INCLUDE="--where:cat==$OPTARG"
+            ;;
         f)
             FILTER="--where:$OPTARG"
             ;;
