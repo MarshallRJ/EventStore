@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 
 namespace EventStore.Core.Services.Gossip
 {
